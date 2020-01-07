@@ -1,0 +1,3 @@
+SELECT LEAST(3, COUNT(customer_id)) AS NumberOfOrders, LEAST(3, YEAR(CURDATE()) - YEAR(MAX(date_ordered))) AS YearsSinceLastOrder, SUM(revenue) AS TotalRevenue FROM `orders` GROUP BY customer_id ORDER BY COUNT(customer_id) DESC, id;
+
+SELECT NumberOfOrders, YearsSinceLastOrder, SUM(TotalRevenue) FROM (SELECT LEAST(3, COUNT(customer_id)) AS NumberOfOrders, LEAST(3, YEAR(CURDATE()) - YEAR(MAX(date_ordered))) AS YearsSinceLastOrder, SUM(revenue) AS TotalRevenue FROM `orders` GROUP BY customer_id) AS T GROUP BY T.NumberOfOrders ORDER BY NumberOfOrders DESC;
